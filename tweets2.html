@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  
+    <script src="https://www.google.com/jsapi"></script>
+
+    
+    <script>
+
+        var public_key = 'dZ4EVmE8yGCRGx5XRX1W';
+
+        var jsonData = $.ajax({
+          url: 'http://localhost:5984/script2</_all_docs/?limit=2100&include_docs=true',
+          //url: 'http://127.0.0.1:5984/test/_all_docs?include_docs=true&conflicts=true',
+          data: {page: 1},
+          dataType: 'json',
+        }).done(function (results) {
+
+
+       var count=results.total_rows;
+         
+
+          for(var i=0;i<count; i++){
+            
+            var user=results.rows[i].doc.user.screen_name;
+            var name=results.rows[i].doc.user.name;
+
+            var texttweet=results.rows[i].doc.text;
+            var fecha=results.rows[i].doc.created_at;
+            var foto=results.rows[i].doc.user.profile_image_url_https;
+            var gps=results.rows[i].doc.user.geo_enabled;
+            var fondo=results.rows[i].doc.user.profile_background_image_url_https;
+            var otros=results.rows[i].doc.user.friends_count;
+
+
+      console.log(user);
+      console.log(texttweet);
+      
+      document.getElementById("tweet").innerHTML += "<tr>"+
+                                                        "<td><img src="+foto+"></td>"+
+                                                        "<td>"+user+"<br>"+name+"</td>"+
+                                                        "<td background="+fondo+">"+texttweet+"</td>"+
+                                                        "<td>"+fecha+"</td>"+
+                                                        "<td>"+otros+"</td>"+
+                                                        
+                                                    "</tr>";      
+        }
+      });
+
+    </script>
+
+  </head>
+  <body>
+     
+    
+<h1><a href="index.html">Volver a Inicio</a></h1>
+
+<div class="container">
+<table class="table table-bordered" > 
+<thead>
+      <tr>
+        <th>Foto</th> 
+        <th>Usuario</th>
+        <th>Tweet</th>
+        <th>Fecha</th>
+        <th>Conteo de seguidores</th>
+        
+      </tr>
+    <tbody id="tweet">  
+    </tbody>
+  </table>
+</div>
+
+  </body>
+</html>
+<footer><h3><a href="index.html">Volver a Inicio</a></h3></footer>
